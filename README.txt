@@ -1,6 +1,6 @@
-===========
+==============================
 Lesgo-post-process
-===========
+==============================
 
 Lesgo-post-process provides modules for dealing with CGNS data output from 
 the LESGO Code. There are various capabilities in the module, but is meant to 
@@ -9,8 +9,22 @@ be used with CGNS output. The main language used is Python 2.7
 The code provides a framework for getting data from CGNS output written
 by the Johns Hopkins Turbulence Research Code LESGO.
 
+Installation
+==============================
+# Dependencies:
+# python 2.7, h5py, numpy
+
+# Download from github:
+git clone git@github.com:tonyinme/lesgo-post-process.git lesgo-post-process
+
+# Go into directory
+cd lesgo-post-process
+
+# Install through python
+sudo python setup.py install
+
 Usage
-=========
+==============================
 You will need an input file. 
 The default and suggested name for it is: 'lesgo.data'
 although you could potentially have a different name.
