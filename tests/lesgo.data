@@ -1,0 +1,48 @@
+# This file includes all the data that needs to be extracted from the 
+# output files in the simulation
+# The plots to include are sampling along a line of data
+# The format to write this data is the following:
+# name, point1, point2, N
+# name (will become name of data file with .dat and plot name as .esp
+# point1, point2 The points of the line
+# N number of points to sample
+#
+# Example:
+# "line_y_1Dx"; [1, 0.2, 0.15]; [1, 1.2, 0.15]; 200
+
+# Line plots:
+# The naming consists of parallalel axis to line, distance and, perpendicular 
+
+# Directories to include
+data_extract_location='./'
+data_output_location='./Data'
+plot_location='./plots'
+
+extract_1D_data='yes'
+extract_2D_data='yes'
+
+plot_1D_data='yes'
+plot_2D_data='yes'
+
+fields:
+
+VelocityX; veluv_avg.cgns; ${u}/{U_\infty}$; 0; 30.0
+
+1D_data:
+
+line_a;[0.3,0.3,0.3];[1,1,1];20
+line_b;[1.5,1.5,0.1];[1.5,1.5,1];25
+
+# Planes
+2D_data:
+
+# Clipping of domain
+# clip = [x1, x2, y1, y2, z1, z2]
+clip=[0, 3.14, 0, 3.14, 0, 1]
+
+planeZ; normal='z', dis=0.5 
+planeY; normal='y', dis=1.0
+
+# Averaging over the whole domain
+average:
+x, y, z

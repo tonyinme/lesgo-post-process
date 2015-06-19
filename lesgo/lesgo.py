@@ -3,7 +3,7 @@
 ##
 ##   Luis 'Tony' Martinez <tony.mtos@gmail.com> (Johns Hopkins University)
 ##
-##   Copyright (C) 2012-2013, Johns Hopkins University
+##   Copyright (C) 2012-2015, Johns Hopkins University
 ##
 ##   This file is part of Lesgo
 ##
@@ -80,9 +80,9 @@ class linesClass(object):
         if not os.path.exists(self.plot_loc):
             os.makedirs(self.plot_loc)
      
-     @classmethod
-     read(cls, read_loc=None):
-         return linesClass()
+     #~ @classmethod
+     #~ read(cls, read_loc=None):
+         #~ return linesClass()
         
     def addData(self, File=None, field=None):
         '''
@@ -485,16 +485,17 @@ class averageClass(object):
             np.savetxt(self.write_loc + '/avgz.dat', (z, u))
 
 
-def caseData():
+def caseData(filename=None):
     '''
     This function will operate on a specific case data
     It is meant to be run in the case directory
     '''
-    # Dependencies in this project
+
+    filename = filename
 
     # Read the input file 'lego.dat'
     [extract_1D_data, extract_2D_data, plot_1D_data, plot_2D_data,
-     lines1D, planes, fieldList] = read_lesgo_data()
+     lines1D, planes, fieldList] = read_lesgo_data(filename)
 
     # Extract all the data
     if extract_1D_data:
@@ -534,7 +535,7 @@ def caseData():
 
 ######################
 # Reading the input files
-def read_lesgo_data():
+def read_lesgo_data(filename):
     '''
     This function reads in the lesgo.data file
     The file contains all the information with respect to
@@ -546,7 +547,7 @@ def read_lesgo_data():
     # N - number of points in line
 
     # The file must always be in this location
-    f=open('./lesgo.data','r')
+    f=open(filename,'r')
 
     # List of line objects
     lines1D=[]
