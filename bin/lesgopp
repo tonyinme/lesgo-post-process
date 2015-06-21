@@ -9,7 +9,7 @@ def main():
     filename='lesgo.data'
 
     # Get the file from the system argument
-    if sys.argv[1:]: filename = str(sys.argv[0])
+    if sys.argv[1:]: filename = str(sys.argv[1])
 
     # Print the filename used
     print 'Post-processing from file', filename
