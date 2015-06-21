@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 # This will read in a CGNS file and convert it to a vapor VDF fromat
 # It needs to call vapor functions so these need to bet set properly
 # As environment variables
