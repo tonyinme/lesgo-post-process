@@ -25,24 +25,14 @@ sudo python setup.py install
 
 Usage
 ==============================
+The main utility can be accessed through the script:
+-------
+lesgopp
+-------
+This script takes as an input the name of the file to be used.
 You will need an input file. 
 The default and suggested name for it is: 'lesgo.data'
 although you could potentially have a different name.
-
-You need to create a python file and run it.
-Here is an example:
-
-'file.py'
-================================================================================
-# Python file
-# import lesgo module
-from lesgo import lesgo
-
-# Get information for the case
-lesgo.caseData(filename='lesgo.data')
-================================================================================
-
-
 
 Here we provide an example for the file with an example dataset:
 
@@ -57,7 +47,6 @@ Here we provide an example for the file with an example dataset:
 # point1, point2 The points of the line
 # N number of points to sample
 #
-
 
 # Line plots:
 # The naming consists of parallalel axis to line, distance and, perpendicular 
