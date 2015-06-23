@@ -30,17 +30,17 @@
     plane.planeClass: a class for storing planes of data
     fieldClass: a class which stores the fields to be plotted
 '''
-
+# Imports from this project
 import interpolation as intp
+import read as lread
+
+# Standard Python imports
 import numpy as np
 import os
 import h5py
 import matplotlib
 matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
-
-
-#~ from scipy.interpolate import griddata
 
 #############################
 # Data classes:
@@ -166,22 +166,13 @@ class linesClass(object):
         '''
         # Open the file
         name = self.write_loc + '/' + self.name + '.dat'
-        f = open(name, 'r')
+        self.data = lread.readData(name=name)
 
-        # Store the name of the fields for the dictionary
-        fields = f.readline().split()
+        #~ f = open(name, 'r')
+        #~ # Store the name of the fields for the dictionary
+        #~ fields = f.readline().split()
+        #~ self.data = dict(zip(fields, np.loadtxt(name, skiprows=1).T))
 
-        self.data = dict(zip(fields, np.loadtxt(name, skiprows=1).T))
-
-        #~ # Create the fields data as empyt lists
-        #~ for field in fields:
-            #~ self.data[field] = []
-#~ 
-        #~ # Loop for all the lines in the file and store
-        #~ # the arrays for each field
-        #~ for line in f:
-            #~ for i, field in enumerate(fields):
-                #~ self.data[field].append(line.split()[i])
 
     def plot(self, field, **parameters):
         '''
@@ -332,13 +323,19 @@ class planeClass(object):
         '''
         This will provide the data field
         fieldObj is an object of the fieldClass
-        The data is read from numpy file (loadtxt)
+        The data is read from numpy file (np.load)
         '''
+        # Original implementation commented out
+        # New implmentation works on the functions from read.py
+
+        #~ npzfile = np.load(self.write_loc + '/' + self.name + field + '.npz')
+        #~ self.dx = npzfile['arr_0']
+        #~ self.dy = npzfile['arr_1']
+        #~ self.data[field] = npzfile['arr_2']
+
         field = fieldObj.name
-        npzfile = np.load(self.write_loc + '/' + self.name + field + '.npz')
-        self.dx = npzfile['arr_0']
-        self.dy = npzfile['arr_1']
-        self.data[field] = npzfile['arr_2']
+        name = self.write_loc + '/' + self.name + field + '.npz'
+        [self.dx, self.dy, self.data[field]] = lread.readNPZData(fname=name)
 
     #################################
     def contour(self, fieldObj=None):
