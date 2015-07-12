@@ -34,6 +34,9 @@ You will need an input file.
 The default and suggested name for it is: 'lesgo.data'
 although you could potentially have a different name.
 
+There are 2 scripts under bin which are meant to write Vapor data.
+These scripts use the standard Vapor utilities so you will need to install those.
+
 Here we provide an example for the file with an example dataset:
 
 'lesgo.data'
@@ -86,3 +89,18 @@ clip=[0, 3.14, 0, 3.14, 0, 1]
 planeZ; normal='z', dis=0.5 
 planeY; normal='y', dis=1.0
 ================================================================================
+
+========================================
+Vapor Data (https://www.vapor.ucar.edu/)
+========================================
+cgns_to_vdf: 
+"cgns_to_vdf filename.cgns"
+This is a python script which takes as an argument a CGNS file written by LESGO.
+It will convert the CGNS file into a Vapor file.
+
+video_cgns_to_vdf:
+"video_cgns_to_vdf *.cgns"
+This will take as an argument a set of CGNS files and write the collection
+as a Vapor dataset.
+You can open the vapor file and visualize the video automatically.
+
