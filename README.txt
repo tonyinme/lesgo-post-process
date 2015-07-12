@@ -34,9 +34,6 @@ You will need an input file.
 The default and suggested name for it is: 'lesgo.data'
 although you could potentially have a different name.
 
-There are 2 scripts under bin which are meant to write Vapor data.
-These scripts use the standard Vapor utilities so you will need to install those.
-
 Here we provide an example for the file with an example dataset:
 
 'lesgo.data'
@@ -93,6 +90,9 @@ planeY; normal='y', dis=1.0
 ========================================
 Vapor Data (https://www.vapor.ucar.edu/)
 ========================================
+There are 2 scripts under bin which are meant to write Vapor data.
+These scripts use the standard Vapor utilities so you will need to install those.
+
 cgns_to_vdf: 
 "cgns_to_vdf filename.cgns"
 This is a python script which takes as an argument a CGNS file written by LESGO.
