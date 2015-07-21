@@ -5,7 +5,10 @@ from lesgo import lesgo
 import sys
 
 def main():
-
+    '''
+    This code will post-process the data from the LESGO code
+    Functions from the lesgo library are called
+    '''
     filename='lesgo.data'
 
     # Get the file from the system argument

@@ -1,0 +1,24 @@
+#!/usr/bin/env python2.7
+# This script will read in a post processing file
+# and perform post-processing from the lesgo-post-process python library
+from lesgo import atm
+import sys
+
+def main():
+    '''
+    This code will post-process the actuator turbine model data
+    from the LESGO code
+    '''
+
+    if sys.argv[1:]: cases = sys.argv[1:]
+
+    # Print the filename used
+    print 'Post-processing Actuator Turbine Model Data from LESGO'
+
+
+    # Run the post-processing utility
+    atm.caseData(cases)
+
+# Run the main function
+if __name__ == '__main__':
+	main()

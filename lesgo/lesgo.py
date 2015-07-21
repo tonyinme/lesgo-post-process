@@ -213,10 +213,13 @@ class planeClass(object):
 
     def __init__(self, name=None, normal=None, dis=None,
                  extract_loc='../output', write_loc='./Data',
-                 plot_loc='./plots'):
+                 plot_loc='./plots', xl=r'$x/D$', yl=r'$z/D$', 
+                 x_ticks=8, y_ticks=3, xshift=0., yshift=0.,
+                 xscale=1., yscale=1.):
         '''
         The initialization of the class object
         '''
+
         # Name of the plane
         self.name = name
 
@@ -226,6 +229,22 @@ class planeClass(object):
         # Normal plane
         self.normal = normal
 
+        # Plot labels
+        self.xlabel=xl
+        self.ylabel=yl
+
+        # Shift the x and y axis
+        self.xshift = xshift
+        self.yshift = yshift
+
+        # Scale
+        self.xscale = xscale
+        self.yscale = yscale
+
+        # Number of ticks
+        self.x_ticks = x_ticks
+        self.y_ticks = y_ticks
+    
         self.extract_loc = extract_loc
         self.write_loc = write_loc
         self.plot_loc = plot_loc
@@ -338,9 +357,13 @@ class planeClass(object):
         [self.dx, self.dy, self.data[field]] = lread.readNPZData(fname=name)
 
     #################################
-    def contour(self, fieldObj=None):
+    def contour(self, fieldObj=None, ):
         '''
         Create contour
+        xl = label in x
+        yl = label in y
+        x_ticks = number of ticks in x
+        y_ticks = number of ticks in y
         '''
         # Obtain information form field object
         field = fieldObj.name
@@ -364,27 +387,36 @@ class planeClass(object):
             #~ matplotlib.rcParams['figure.figsize']=[a,b]
             #~ print a,b,matplotlib.rcParams['figure.figsize']
 
-            plt.pcolormesh(self.dx, self.dy, self.data[field].T,
-                           shading='gouraud',
+            plt.pcolormesh(self.dx*self.xscale+self.xshift, 
+                           self.dy*self.yscale+self.yshift, 
+                           self.data[field].T, shading='gouraud',
                            cmap=plt.get_cmap(color), vmin=fMin, vmax=fMax)
 
             # Set the colorscale
             plt.gca().set_aspect('equal', adjustable='box')
 
             # Axis limits
-            plt.xlim([np.amin(self.dx), np.amax(self.dx)])
-            plt.ylim([np.amin(self.dy), np.amax(self.dy)])
+            plt.xlim([np.amin(self.dx)*self.xscale +self.xshift , np.amax(self.dx)*self.xscale+self.xshift])
+            plt.ylim([np.amin(self.dy)*self.yscale+self.yshift, np.amax(self.dy)*self.yscale+self.yshift])
 
-            # Tick [ara,eters
+            # Tick parameters
             plt.tick_params(
                 axis='both',        # changes apply to the x-axis
                 which='both',       # both major and minor ticks are affected
-                bottom='off',       # ticks along the bottom edge are off
+                bottom='on',       # ticks along the bottom edge are off
                 top='off',          # ticks along the top edge are off
-                left='off',         # ticks along the left edge are off
+                left='on',         # ticks along the left edge are off
                 right='off',        # ticks along the right edge are off
-                labelbottom='off',  # labels along the bottom edge are off
-                labelleft='off')    # labels along the bottom edge are off
+                labelbottom='on',  # labels along the bottom edge are off
+                labelleft='on')    # labels along the bottom edge are off
+
+            # Set number of ticks
+            plt.locator_params(axis = 'x', nbins = self.x_ticks)
+            plt.locator_params(axis = 'y', nbins = self.y_ticks)
+    
+            # x and y labels
+            plt.xlabel(self.xlabel)
+            plt.ylabel(self.ylabel)
 
             from mpl_toolkits.axes_grid1 import make_axes_locatable
             divider = make_axes_locatable(plt.gca())

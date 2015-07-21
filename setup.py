@@ -1,4 +1,7 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 setup(
     name='lesgo',
@@ -6,7 +9,8 @@ setup(
     author='Tony Martinez',
     author_email='tony.mtos@gmail.com',
     packages=['lesgo'],
-    scripts=['bin/cgns_to_vdf.py', 'bin/video_cgns_to_vdf.py', 'bin/lesgopp'],
+    scripts=[ 'bin/cgns_to_vdf.py', 'bin/video_cgns_to_vdf.py', 'bin/lesgopp',
+              'bin/atmpp'],
     url='http://pypi.python.org/pypi/lesgo/',
     license='LICENSE.txt',
     description='Post processing utilities for CGNS output.',
