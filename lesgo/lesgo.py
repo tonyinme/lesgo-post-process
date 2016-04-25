@@ -39,7 +39,7 @@ import numpy as np
 import os
 import h5py
 import matplotlib
-matplotlib.use('Agg') 
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 #############################
@@ -77,17 +77,17 @@ class linesClass(object):
         self.data['arclength'] = list(np.linspace(0, line_len, N))
 
         # Create directories to write mean data
-        if not os.path.exists(self.extract_loc):
-            os.makedirs(self.extract_loc)
+        #if not os.path.exists(self.extract_loc):
+            #os.makedirs(self.extract_loc)
         if not os.path.exists(self.write_loc):
             os.makedirs(self.write_loc)
-        if not os.path.exists(self.plot_loc):
-            os.makedirs(self.plot_loc)
-     
+        #if not os.path.exists(self.plot_loc):
+            #os.makedirs(self.plot_loc)
+
      #~ @classmethod
      #~ read(cls, read_loc=None):
          #~ return linesClass()
-        
+
     def addData(self, File=None, field=None):
         '''
         This will provide the data field
@@ -120,7 +120,7 @@ class linesClass(object):
         #~ xi = zip(self.data['x'], self.data['y'], self.data['z'])
         #~ # Points where the data is
         #~ points = (x.flatten(), y.flatten(), z.flatten())
-        #~ 
+        #~
         #~ # Interpolate the data
         #~ self.data[field] = griddata(points, u, xi, method='linear')
 
@@ -213,7 +213,7 @@ class planeClass(object):
 
     def __init__(self, name=None, normal=None, dis=None,
                  extract_loc='../output', write_loc='./Data',
-                 plot_loc='./plots', xl=r'$x/D$', yl=r'$z/D$', 
+                 plot_loc='./plots', xl=r'$x/D$', yl=r'$z/D$',
                  x_ticks=8, y_ticks=3, xshift=0., yshift=0.,
                  xscale=1., yscale=1.):
         '''
@@ -244,7 +244,7 @@ class planeClass(object):
         # Number of ticks
         self.x_ticks = x_ticks
         self.y_ticks = y_ticks
-    
+
         self.extract_loc = extract_loc
         self.write_loc = write_loc
         self.plot_loc = plot_loc
@@ -387,8 +387,8 @@ class planeClass(object):
             #~ matplotlib.rcParams['figure.figsize']=[a,b]
             #~ print a,b,matplotlib.rcParams['figure.figsize']
 
-            plt.pcolormesh(self.dx*self.xscale+self.xshift, 
-                           self.dy*self.yscale+self.yshift, 
+            plt.pcolormesh(self.dx*self.xscale+self.xshift,
+                           self.dy*self.yscale+self.yshift,
                            self.data[field].T, shading='gouraud',
                            cmap=plt.get_cmap(color), vmin=fMin, vmax=fMax)
 
@@ -413,7 +413,7 @@ class planeClass(object):
             # Set number of ticks
             plt.locator_params(axis = 'x', nbins = self.x_ticks)
             plt.locator_params(axis = 'y', nbins = self.y_ticks)
-    
+
             # x and y labels
             plt.xlabel(self.xlabel)
             plt.ylabel(self.ylabel)
@@ -439,7 +439,7 @@ class planeClass(object):
             # Figure attached to limits
             plt.tight_layout()
 
-            plt.savefig(self.plot_loc + '/' + self.name + 
+            plt.savefig(self.plot_loc + '/' + self.name +
                         field + '-' + color + '.jpg', dpi=400)
             plt.close()
 
@@ -512,7 +512,7 @@ class averageClass(object):
         if self.plane == 'y':
             uavg = np.average(np.average(u,axis=1),axis=1)
             np.savetxt(self.write_loc + '/avgy.dat', (y, u))
-            
+
         if self.plane == 'z':
             uavg = np.average(np.average(u,axis=0),axis=1)
             np.savetxt(self.write_loc + '/avgz.dat', (z, u))
@@ -607,22 +607,22 @@ def read_lesgo_data(filename):
 
             if line.split('=')[0]=='extract_1D_data':
                 extract_1D_data=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='extract_2D_data':
                 extract_2D_data=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='plot_1D_data':
                 plot_1D_data=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='plot_2D_data':
                 plot_2D_data=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='data_extract_location':
                 data_extract_location=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='data_output_location':
                 data_output_location=eval(line.split('=')[1])
-                
+
             elif line.split('=')[0]=='plot_location':
                 plot_location=eval(line.split('=')[1])
 
@@ -645,7 +645,7 @@ def read_lesgo_data(filename):
                     File= line.split(';')[1].strip()
                     label= line.split(';')[2].strip()
                     # Declare field class object in list
-                    fieldList.append( fieldClass(name=name, label=label, 
+                    fieldList.append( fieldClass(name=name, label=label,
                                       File=File))
                     # Maximum and minimum values, if given
                     if len(line.split(';'))>3:
@@ -664,7 +664,7 @@ def read_lesgo_data(filename):
                     N=eval(line.split(';')[3])
                     # Declare the class object as part of list
                     lines1D.append( linesClass( p1=p1, p2=p2, N=N, name=name,
-                            extract_loc=data_extract_location, 
+                            extract_loc=data_extract_location,
                             write_loc=data_output_location,
                             plot_loc=plot_location))
                 #~ except:
@@ -694,13 +694,13 @@ def read_lesgo_data(filename):
 
             elif flag == 'average':
                 try:
-                    print('Average')    
+                    print('Average')
                 except:
                     print('Could not perform averaging')
 
     result=[extract_1D_data, extract_2D_data, plot_1D_data, plot_2D_data,
             lines1D, planes, fieldList]
-            
+
     return result
 
 

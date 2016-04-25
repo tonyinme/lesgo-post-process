@@ -59,7 +59,16 @@ def readNPZData(xname='arr_0', yname='arr_1', field='arr_2', fname=None):
 
     return [x, y, d]
 
+def readBEM(fname=None, avgperc=0.5):
+    '''
+    This will read a file from the actuator turbine model
+    containing quantities along the blade such as lift, drag, etc
 
+    fname is the filename and location to open
+    avgperc is the percentage of the file to average (from the end)
+    '''
+    
+    y = np.loadtxt(fname, skiprows=1)[-1000:,2:].mean(axis=0)
 
 
 

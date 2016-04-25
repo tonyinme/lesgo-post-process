@@ -15,7 +15,6 @@ def main():
     # Print the filename used
     print 'Post-processing Actuator Turbine Model Data from LESGO'
 
-
     # Run the post-processing utility
     atm.caseData(cases)
 

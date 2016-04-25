@@ -29,7 +29,7 @@ actuator turbine model in LESGO
 # Standard Python imports
 import numpy as np
 import os
-
+import matplotlib.pyplot as plt
 
 # Class for averaging BEM data and writing it
 class BEMClass(object):
@@ -94,6 +94,16 @@ class BEMClass(object):
             f.write('\n')
         f.close()
 
+    def plotBEM(self):
+        '''
+        Plot the BEM quantities
+        These plots are meant to be 
+        '''
+        plt.clf()
+        plt.plot(self.x, self.y)
+        plt.xlabel('r/R')
+        plt.ylabel(self.field)
+        plt.savefig(self.write_loc + '/' + self.field + '.jpg')
 
 def powerAndThrust(read_loc, avgperc=0.5):
     '''
@@ -127,6 +137,33 @@ def powerAndThrust(read_loc, avgperc=0.5):
 
     f.close()
 
+def power(read_loc, avgperc=0.5):
+    '''
+    Average power
+    read_loc - The location where to read the files from
+    '''
+    print 'Computing power'
+    # Load the file
+    p = np.loadtxt(read_loc + '/power', skiprows=1)
+
+    # Establish from what point to average
+    n = np.shape(p)[0] * avgperc
+
+    nr = 1  # This is which column to average
+
+    # Average
+    p = p[-n:, nr].mean(axis=0)
+
+    f = open(read_loc + '/Data/avg_power.dat', "w")
+    # Write file header
+    f.write('{0: >12}'.format('power'))
+    f.write('\n')
+    num = '{:3.8f}'.format(p)
+    f.write('{0: >12}'.format(str(num)))
+    f.write('\n')
+
+    f.close()
+
 
 def caseData(cases):
     '''
@@ -134,11 +171,21 @@ def caseData(cases):
     cases - a list of directories for each case
     '''
     # List of variables to plot
-    ls = ['alpha', 'Cd', 'Cl', 'drag', 'lift', 'Vaxial', 'Vrel', 'Vtangential']
+    ls = ['alpha', 'Cd', 'Cl', 'drag', 'lift', 'Vaxial', 'Vrel', 'Vtangential',
+          'axialForce','tangentialForce']
 
     for case in cases:
         for field in ls:
-            bem = BEMClass(field=field, write_loc=case + '/Data', read_loc=case)
-            bem.readBEM()
-            bem.writeBEM()
-        powerAndThrust(case)
+            try:
+                bem = BEMClass(field=field, write_loc=case + '/Data', read_loc=case)
+                bem.readBEM()
+                bem.writeBEM()
+                bem.plotBEM()
+            except:
+                print 'Could not read ' + field
+        try:
+            # Calculate power and thrust
+            power(case)
+            powerAndThrust(case)
+        except:
+            print 'Power and thrust could not be calculated'

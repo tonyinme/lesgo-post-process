@@ -87,6 +87,18 @@ planeZ; normal='z', dis=0.5
 planeY; normal='y', dis=1.0
 ================================================================================
 
+There is a script for post-processing the Actuator Turbine Model Output
+-------
+atmpp
+-------
+----------
+'atmpp turbine1 turbine2'
+--------
+In order to run it you need to specify a list of turbine directories written
+by the Actuator Turbine Model
+It will time average the quantities along the blades such as lift and drag.
+Also it will 
+
 ========================================
 Vapor Data (https://www.vapor.ucar.edu/)
 ========================================
