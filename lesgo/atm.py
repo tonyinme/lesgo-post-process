@@ -117,7 +117,7 @@ def powerAndThrust(read_loc, avgperc=0.5):
     t = np.loadtxt(read_loc + '/thrust', skiprows=1)
 
     # Establish from what point to average
-    n = np.shape(p)[0] * avgperc
+    n = int(np.shape(p)[0] * avgperc)
 
     nr = 1  # This is which column to average
 
@@ -149,7 +149,7 @@ def power(read_loc, avgperc=0.5):
     p = np.loadtxt(read_loc + '/power', skiprows=1)
 
     # Establish from what point to average
-    n = np.shape(p)[0] * avgperc
+    n = int(np.shape(p)[0] * avgperc)
 
     nr = 1  # This is which column to average
 
