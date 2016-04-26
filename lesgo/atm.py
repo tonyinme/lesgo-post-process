@@ -105,7 +105,7 @@ class BEMClass(object):
         plt.plot(self.x, self.y)
         plt.xlabel('r/R')
         plt.ylabel(self.field)
-        plt.savefig(self.write_loc + '/' + self.field + '.jpg')
+        plt.savefig(self.write_loc + '/' + self.field + '.pdf')
 
 def powerAndThrust(read_loc, avgperc=0.5):
     '''
