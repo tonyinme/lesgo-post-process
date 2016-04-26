@@ -177,9 +177,11 @@ def caseData(cases):
           'axialForce','tangentialForce']
 
     for case in cases:
+        print ('Post-processing case ', case)
         for field in ls:
             try:
-                bem = BEMClass(field=field, write_loc=case + '/Data', read_loc=case)
+                bem = BEMClass(field=field, write_loc='./Data/' + case, 
+                               read_loc=case)
                 bem.readBEM()
                 bem.writeBEM()
                 bem.plotBEM()
