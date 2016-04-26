@@ -29,6 +29,8 @@ actuator turbine model in LESGO
 # Standard Python imports
 import numpy as np
 import os
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # Class for averaging BEM data and writing it
@@ -60,7 +62,7 @@ class BEMClass(object):
         y = np.loadtxt(self.read_loc + '/' + self.field, skiprows=1)
 
         # Establish from what point to average
-        n = np.shape(y)[0] * avgperc
+        n = int(np.shape(y)[0] * avgperc)
 
         # Average
         self.y = y[-n:, nr:].mean(axis=0)
