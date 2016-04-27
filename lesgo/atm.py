@@ -107,11 +107,18 @@ class BEMClass(object):
         plt.ylabel(self.field)
         plt.savefig(self.write_loc + '/' + self.field + '.pdf')
 
-def powerAndThrust(read_loc, avgperc=0.5):
+def powerAndThrust(read_loc='./', write_loc='./', avgperc=0.5):
     '''
     Average power
     read_loc - The location where to read the files from
+    write_loc - Location to write output
     '''
+    print( 'Computing power and thrust')
+
+    # Create directories to save plots
+    if not os.path.exists(write_loc):
+        os.makedirs(write_loc)
+
     # Load the file
     p = np.loadtxt(read_loc + '/power', skiprows=1)
     t = np.loadtxt(read_loc + '/thrust', skiprows=1)
@@ -125,7 +132,7 @@ def powerAndThrust(read_loc, avgperc=0.5):
     p = p[-n:, nr].mean(axis=0)
     t = t[-n:, nr].mean(axis=0)
 
-    f = open(read_loc + '/Data/avg_power_thrust.dat', "w")
+    f = open(write_loc + '/avg_power_thrust.dat', "w")
     # Write file header
     f.write('{0: >12}'.format('power'))
     f.write('{0: >12}'.format('thrust'))
@@ -139,12 +146,17 @@ def powerAndThrust(read_loc, avgperc=0.5):
 
     f.close()
 
-def power(read_loc, avgperc=0.5):
+def power(read_loc='./', write_loc='./', avgperc=0.5):
     '''
     Average power
     read_loc - The location where to read the files from
     '''
     print 'Computing power'
+
+    # Create directories to save plots
+    if not os.path.exists(write_loc):
+        os.makedirs(write_loc)
+
     # Load the file
     p = np.loadtxt(read_loc + '/power', skiprows=1)
 
@@ -156,7 +168,7 @@ def power(read_loc, avgperc=0.5):
     # Average
     p = p[-n:, nr].mean(axis=0)
 
-    f = open(read_loc + '/Data/avg_power.dat', "w")
+    f = open(write_loc + '/Data/avg_power.dat', "w")
     # Write file header
     f.write('{0: >12}'.format('power'))
     f.write('\n')
@@ -189,7 +201,7 @@ def caseData(cases):
                 print 'Could not read ' + field
         try:
             # Calculate power and thrust
-            power(case)
-            powerAndThrust(case)
+            power(read_loc=case, write_loc='./Data/'+case)
+            powerAndThrust(read_loc=case, write_loc='./Data/'+case)
         except:
             print 'Power and thrust could not be calculated'
