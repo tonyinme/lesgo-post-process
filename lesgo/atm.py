@@ -151,7 +151,7 @@ def power(read_loc='./', write_loc='./', avgperc=0.5):
     Average power
     read_loc - The location where to read the files from
     '''
-    print 'Computing power'
+    print ('Computing power')
 
     # Create directories to save plots
     if not os.path.exists(write_loc):
@@ -198,10 +198,10 @@ def caseData(cases):
                 bem.writeBEM()
                 bem.plotBEM()
             except:
-                print 'Could not read ' + field
+                print ('Could not read ' + field)
         try:
             # Calculate power and thrust
             power(read_loc=case, write_loc='./Data/'+case)
             powerAndThrust(read_loc=case, write_loc='./Data/'+case)
         except:
-            print 'Power and thrust could not be calculated'
+            print ('Power and thrust could not be calculated')
