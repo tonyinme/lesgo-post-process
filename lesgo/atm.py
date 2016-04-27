@@ -168,7 +168,7 @@ def power(read_loc='./', write_loc='./', avgperc=0.5):
     # Average
     p = p[-n:, nr].mean(axis=0)
 
-    f = open(write_loc + '/Data/avg_power.dat', "w")
+    f = open(write_loc + '/avg_power.dat', "w")
     # Write file header
     f.write('{0: >12}'.format('power'))
     f.write('\n')
