@@ -178,6 +178,38 @@ def power(read_loc='./', write_loc='./', avgperc=0.5):
 
     f.close()
 
+def RotSpeed(read_loc='./', write_loc='./', avgperc=0.5):
+    '''
+    Average power
+    read_loc - The location where to read the files from
+    '''
+    print ('Computing RotSpeed')
+
+    # Create directories to save plots
+    if not os.path.exists(write_loc):
+        os.makedirs(write_loc)
+
+    # Load the file
+    p = np.loadtxt(read_loc + '/RotSpeed', skiprows=1)
+
+    # Establish from what point to average
+    n = int(np.shape(p)[0] * avgperc)
+
+    nr = 1  # This is which column to average
+
+    # Average
+    p = p[-n:, nr].mean(axis=0)
+
+    f = open(write_loc + '/avg_RotSpeed.dat', "w")
+    # Write file header
+    f.write('{0: >12}'.format('RotSpeed'))
+    f.write('\n')
+    num = '{:3.8f}'.format(p)
+    f.write('{0: >12}'.format(str(num)))
+    f.write('\n')
+
+    f.close()
+
 
 def caseData(cases):
     '''
@@ -203,5 +235,6 @@ def caseData(cases):
             # Calculate power and thrust
             power(read_loc=case, write_loc='./Data/'+case)
             powerAndThrust(read_loc=case, write_loc='./Data/'+case)
+            RotSpeed(read_loc=case, write_loc='./Data/'+case)
         except:
             print ('Power and thrust could not be calculated')
